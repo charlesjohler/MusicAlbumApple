@@ -60,7 +60,7 @@ struct ContentView: View {
             navigationViewContents
                 .navigationTitle("Music Albums")
         }
-        .searchable("Albums", text: $searchTerm)
+        .searchable(text: $searchTerm, prompt: "Albums")
         .gesture(hiddenDevelopmentSettingsGesture)
     }
     
@@ -84,7 +84,7 @@ struct ContentView: View {
     
     /// Makes a new search request to MusicKit when the current search term changes.
     private func requestUpdatedSearchResults(for searchTerm: String) {
-        detach {
+      Task.detached {
             if searchTerm.isEmpty {
                 await self.reset()
             } else {
@@ -140,7 +140,7 @@ struct ContentView: View {
         if detectedBarcode.isEmpty {
             self.detectedAlbum = nil
         } else {
-            detach {
+          Task.detached {
                 do {
                     // DEMO: Request albums matching detectedBarcode.
                     

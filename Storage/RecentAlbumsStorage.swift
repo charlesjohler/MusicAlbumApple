@@ -88,7 +88,7 @@ class RecentAlbumsStorage: ObservableObject {
         if recentlyViewedAlbumIDs.isEmpty {
             self.recentlyViewedAlbums = []
         } else {
-            detach {
+          Task.detached {
                 do {
                     let albumsRequest = MusicCatalogResourceRequest<Album>(matching: \.id, memberOf: recentlyViewedAlbumIDs)
                     let albumsResponse = try await albumsRequest.response()

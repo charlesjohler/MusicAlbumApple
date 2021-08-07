@@ -136,7 +136,7 @@ struct WelcomeView: View {
     private func handleButtonPressed() {
         switch musicAuthorizationStatus {
             case .notDetermined:
-                detach {
+            Task.detached {
                     let musicAuthorizationStatus = await MusicAuthorization.request()
                     await update(with: musicAuthorizationStatus)
                 }
