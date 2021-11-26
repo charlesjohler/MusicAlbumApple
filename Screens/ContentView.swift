@@ -7,12 +7,17 @@ The app's top level view that allows users to find music they want to rediscover
 
 import MusicKit
 import SwiftUI
+import AVFoundation
 
 struct ContentView: View {
-    
+    @State private var fileName = ""
+    @State private var openFile = false
+    @State private var saveFile = false
+    //private let player = ApplicationMusicPlayer.shared
     // MARK: - View
-    
+    static var  audioPlayer =  AVAudioPlayer()
     var body: some View {
+        
         rootView
             .onAppear(perform: recentAlbumsStorage.beginObservingMusicAuthorizationStatus)
             .onChange(of: searchTerm, perform: requestUpdatedSearchResults)
@@ -30,12 +35,36 @@ struct ContentView: View {
             }
         
             // Display the welcome view when appropriate.
-            .welcomeSheet()
+           // .welcomeSheet()
     }
     
     /// The various components of the main navigation view.
     private var navigationViewContents: some View {
         VStack {
+            Button(action: {openFile.toggle()}, label: {
+                Text("Open")
+            })
+                .fileImporter(isPresented: $openFile, allowedContentTypes: [.audio])
+            { result in
+                if case .success = result {
+                    do {
+                        let audioURL: URL = try result.get()
+                        if audioURL.startAccessingSecurityScopedResource(){
+                            ContentView.audioPlayer = try AVAudioPlayer(contentsOf: audioURL)
+                        //audioPlayer.delegate = ...
+
+                            ContentView.audioPlayer.prepareToPlay()
+
+                            ContentView.audioPlayer.play()
+                        }
+                    } catch {
+                        let nsError = error as NSError
+                        fatalError("File Import Error \(nsError), \(nsError.userInfo)")
+                    }
+                } else {
+                    print("File Import Failed")
+                }
+            }
             searchResultsList
                 .animation(.default, value: albums)
             if isBarcodeScanningAvailable {
@@ -62,6 +91,8 @@ struct ContentView: View {
         }
         .searchable(text: $searchTerm, prompt: "Albums")
         .gesture(hiddenDevelopmentSettingsGesture)
+        
+
     }
     
     // MARK: - Search results requesting
@@ -121,7 +152,7 @@ struct ContentView: View {
     // MARK: - Barcode detection handling
     
     /// `true` if the barcode scanning functionality is available to the user.
-    @AppStorage("barcode-scanning-available") private var isBarcodeScanningAvailable = true
+    @AppStorage("barcode-scanning-available") private var isBarcodeScanningAvailable = false
     
     /// `true` if the barcode scanning view should be shown.
     @State private var isBarcodeScanningViewPresented = false
@@ -193,8 +224,8 @@ struct ContentView: View {
 
 // MARK: - Previews
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}

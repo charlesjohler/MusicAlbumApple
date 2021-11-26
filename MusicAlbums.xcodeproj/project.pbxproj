@@ -42,6 +42,7 @@
 		5DBD6FA4263A1E6400D545CA /* RecentAlbumsStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentAlbumsStorage.swift; sourceTree = "<group>"; };
 		956B049B4C0371C8B0E18BDE /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		C60BA1391DF0B65059A478D5 /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
+		C6C5E14F272EBBD600EF3171 /* swiftplantuml.svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = swiftplantuml.svg; sourceTree = "<group>"; };
 		D6328558768CDFB990C0BEB1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				D6328558768CDFB990C0BEB1 /* README.md */,
+				C6C5E14F272EBBD600EF3171 /* swiftplantuml.svg */,
 				5D16E1CB2637FC64000AD556 /* App */,
 				5D16E1B82637FB69000AD556 /* Screens */,
 				5D16E1C42637FC01000AD556 /* Cells */,
